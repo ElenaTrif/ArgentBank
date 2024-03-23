@@ -19,6 +19,8 @@ body {
 
 .bg-dark {
   background-color: #12002b;
+  min-height: calc(100vh - 11rem);
+  padding-top: 1.5rem;
 }
 
 .sr-only {
@@ -103,6 +105,7 @@ body {
   margin-bottom: 0;
   font-size: 0.9rem;
 }
+
 
 @media (min-width: 920px) {
   .hero {

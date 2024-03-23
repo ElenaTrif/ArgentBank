@@ -3,11 +3,9 @@ import SignInForm from "../components/SignInForm";
 
 function SignInPage() {
   return (
-    <div>
       <main className="main bg-dark">
         <SignInForm />
       </main>
-    </div>
   );
 }
 
