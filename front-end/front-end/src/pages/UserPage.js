@@ -1,7 +1,11 @@
-import React from "react";
-import Account from "../components/Account";
+// UserPage.js
+import React from 'react';
+import { useSelector } from 'react-redux';
+import Account from '../components/Account';
 
 function UserPage() {
+  const userName = useSelector(state => state.auth.userName); // Utilisez votre propre sélecteur pour obtenir le nom de l'utilisateur connecté
+
   return (
     <div>
       <main className="main bg-dark">
@@ -9,7 +13,7 @@ function UserPage() {
           <h1>
             Welcome back
             <br />
-            Tony Jarvis!
+            {userName} {/* Affichez le nom de l'utilisateur */}
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>

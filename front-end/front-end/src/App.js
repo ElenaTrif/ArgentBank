@@ -8,6 +8,7 @@ import Footer from "./layouts/Footer";
 import { Provider } from "react-redux";
 import store from "./Store/store";
 
+
 function App() {
   return (
     <Provider store={store}>
