@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import authReducer from "../reducers/authReducer"; // Remplacez userReducer par le nom de votre reducer
+import userReducer from "../slices/userSlice"; // Assurez-vous que le chemin est correct
 
 // Combine tous les réducteurs en un seul réducteur racine
 const rootReducer = combineReducers({
-  auth: authReducer, // Exemple de combinaison de reducers
+  user: userReducer, // Utilisation directe du réducteur de userSlice
   // Ajoutez d'autres reducers ici si nécessaire
 });
 

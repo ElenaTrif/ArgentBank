@@ -2,23 +2,32 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/authActions";
+import { fetchUserProfile } from "../actions/userActions";
 
 function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.auth.error);
-  const token = useSelector((state) => state.auth.token);
+  const error = useSelector((state) => state.user.error);
+  const token = useSelector((state) => state.user.token);
+
 
   // Effect hook pour effectuer la redirection lorsque le token est mis à jour
   useEffect(() => {
-    if (token) {
-      window.location.href = "/user"; // Redirection vers la page de l'utilisateur
-    }
-  }, [token]);
+    const fetchData = async () => {
+      if (token) {
+        // Appeler la fonction fetchUserProfile après une connexion réussie
+        await dispatch(fetchUserProfile());
+        window.location.href = "/user"; // Redirection vers la page de l'utilisateur
+      }
+    };
+    fetchData();
+  }, [token, dispatch]); // Ajouter dispatch comme dépendance
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Email:", email);
+    console.log("Password:", password);
     dispatch(login(email, password));
   };
 
@@ -32,6 +41,7 @@ function SignInForm() {
           <input
             type="text"
             id="username"
+            autoComplete="current-password"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -41,6 +51,7 @@ function SignInForm() {
           <input
             type="password"
             id="password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -52,7 +63,7 @@ function SignInForm() {
         <button type="submit" className="sign-in-button">
           Sign In
         </button>
-        {error && <div>{error}</div>}
+        {error && <div className="error-message">Incorrect email or password.</div>}
       </form>
     </section>
   );

@@ -55,11 +55,17 @@ body {
 
 .main-nav-item {
   text-decoration: none;
-  margin-right: 0.5rem;
+  margin-right: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .fa-user-circle {
-  margin-right: 0.5rem;
+  margin-right: 0.2rem;
+}
+
+.fa-sign-out {
+  margin-right: 0.2rem;
 }
 
 .main-nav-item:hover {
@@ -207,6 +213,10 @@ body {
 .input-wrapper input {
   padding: 5px;
   font-size: 1.2rem;
+}
+
+.error-message {
+  color: red;
 }
 
 .footer {

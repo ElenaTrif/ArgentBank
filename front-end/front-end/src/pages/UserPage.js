@@ -1,10 +1,25 @@
 // UserPage.js
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProfile } from "../actions/userActions";
 import Account from '../components/Account';
 
 function UserPage() {
-  const userName = useSelector(state => state.auth.userName); // Utilisez votre propre sélecteur pour obtenir le nom de l'utilisateur connecté
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const token = useSelector((state) => state.user.token);
+
+  console.log("Token:", token);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserProfile());
+    }
+  }, [token, dispatch]);
+  
+  const fullName = user ? `${user.firstName} ${user.lastName}` : null;
+
+  console.log("FullName:", fullName);
 
   return (
     <div>
@@ -13,28 +28,32 @@ function UserPage() {
           <h1>
             Welcome back
             <br />
-            {userName} {/* Affichez le nom de l'utilisateur */}
+            {fullName}!
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>
-        <Account
-          title="Argent Bank Checking"
-          number="x8349"
-          amount="$2,082.79"
-          description="Available Balance"
-        />
-        <Account
-          title="Argent Bank Savings"
-          number="x6712"
-          amount="$10,928.42"
-          description="Available Balance"
-        />
-        <Account
-          title="Argent Bank Credit Card"
-          number="x8349"
-          amount="$184.30"
-          description="Current Balance"
-        />
+        {token && (
+          <>
+            <Account
+              title="Argent Bank Checking"
+              number="x8349"
+              amount="$2,082.79"
+              description="Available Balance"
+            />
+            <Account
+              title="Argent Bank Savings"
+              number="x6712"
+              amount="$10,928.42"
+              description="Available Balance"
+            />
+            <Account
+              title="Argent Bank Credit Card"
+              number="x8349"
+              amount="$184.30"
+              description="Current Balance"
+            />
+          </>
+        )}
       </main>
     </div>
   ); 

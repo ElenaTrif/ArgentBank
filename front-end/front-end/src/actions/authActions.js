@@ -1,3 +1,5 @@
+import { loginSuccess, loginFailure, removeToken, setToken, setUser } from '../slices/userSlice';
+
 export const login = (email, password) => {
   return async (dispatch) => {
     try {
@@ -10,16 +12,29 @@ export const login = (email, password) => {
       });
       const data = await response.json();
 
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: { token: data.body.token, userName: email },
-      }); // Ajoutez le nom de l'utilisateur à l'action
+
+      console.log("Login success:", data);
+
+      if (response.ok) {
+        dispatch(loginSuccess({ token: data.body.token, user: data.body.user }));
+        dispatch(setToken(data.body.token)); // Mettre à jour le token dans le store Redux
+        dispatch(setUser(data.body.user)); // Stockez les informations du profil dans le state Redux
+      } else {
+        dispatch(loginFailure(data.message));
+      }
+      
     } catch (error) {
-      dispatch({ type: "LOGIN_FAILURE", payload: error.message });
+      dispatch(loginFailure(error.message));
     }
   };
 };
 
 export const logout = () => {
-  return { type: "LOGOUT" };
+  return (dispatch) => {
+
+    console.log("Logging out"); 
+
+    
+    dispatch(removeToken()); // Supprimez le token utilisateur lors de la déconnexion
+  };
 };
