@@ -31,9 +31,13 @@ export const userSlice = createSlice({
     loginFailure: (state, action) => {
       state.error = action.payload;
     },
+    updateUsername: (state, action) => {
+      state.user.userName = action.payload; // Mettre à jour le nom d'utilisateur
+      sessionStorage.setItem('user', JSON.stringify(state.user)); // Mettre à jour le sessionStorage
+    },
   },
 });
 
-export const { setToken, setUser, removeToken,  loginSuccess, loginFailure } = userSlice.actions;
+export const { setToken, setUser, removeToken,  loginSuccess, loginFailure, updateUsername } = userSlice.actions;
 
 export default userSlice.reducer;

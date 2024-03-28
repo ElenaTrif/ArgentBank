@@ -33,3 +33,35 @@ export const fetchUserProfile = () => {
     }
   };
 };
+
+export const updateUser = (firstName, lastName, newUsername) => {
+  return async (dispatch, getState) => {
+    try {
+      const { token } = getState().user;
+
+      const userData = {
+        firstName: firstName,
+        lastName: lastName,
+        userName: newUsername
+      };
+      
+      const response = await fetch("http://localhost:3001/api/v1/user/profile", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        dispatch(setUser(data.body)); // Mettre à jour les données utilisateur dans le store Redux
+      } else {
+        console.error("Failed to update username:", data.message);
+      }
+    } catch (error) {
+      console.error("Error updating username:", error);
+    }
+  };
+};

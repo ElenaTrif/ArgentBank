@@ -1,13 +1,16 @@
 // UserPage.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile } from "../actions/userActions";
 import Account from '../components/Account';
+import Modal from "../components/Modal"; // Importer le composant Modal
+import UsernameForm from "../components/UsernameForm"; // Importer le formulaire de modification du pseudo
 
 function UserPage() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
+  const [showModal, setShowModal] = useState(false); // État pour afficher/masquer la modale
 
   console.log("Token:", token);
 
@@ -21,6 +24,18 @@ function UserPage() {
 
   console.log("FullName:", fullName);
 
+  const handleEditNameClick = () => {
+
+    console.log("Edit Name button clicked");
+    
+    setShowModal(true); // Afficher la modale lorsque le bouton "Edit Name" est cliqué
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // Fermer la modale
+  };
+  
+
   return (
     <div>
       <main className="main bg-dark">
@@ -30,7 +45,7 @@ function UserPage() {
             <br />
             {fullName}!
           </h1>
-          <button className="edit-button">Edit Name</button>
+          <button className="edit-button" onClick={handleEditNameClick}>Edit Name</button>
         </div>
         {token && (
           <>
@@ -55,6 +70,12 @@ function UserPage() {
           </>
         )}
       </main>
+      {showModal && ( // Afficher la modale si showModal est vrai
+        <Modal onClose={handleCloseModal}>
+          <h2>Edit user info</h2>
+          <UsernameForm firstName={user.firstName} lastName={user.lastName} userName={user.userName} onClose={handleCloseModal}/>
+        </Modal>
+      )}
     </div>
   ); 
 }
