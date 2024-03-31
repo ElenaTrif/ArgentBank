@@ -8,8 +8,7 @@ function UserProfile() {
   const user = useSelector((state) => state.user.user);
 
   return (
-    <div>
-      <h2>User Profile</h2>
+    <div className="modal-container">
       {user && (
         <>
           <p>First Name: {user.firstName}</p>

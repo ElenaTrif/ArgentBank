@@ -12,24 +12,51 @@ function SignInForm() {
   const token = useSelector((state) => state.user.token);
 
 
-  // Effect hook pour effectuer la redirection lorsque le token est mis à jour
-  useEffect(() => {
-    const fetchData = async () => {
-      if (token) {
-        // Appeler la fonction fetchUserProfile après une connexion réussie
-        await dispatch(fetchUserProfile());
-        window.location.href = "/user"; // Redirection vers la page de l'utilisateur
-      }
-    };
-    fetchData();
-  }, [token, dispatch]); // Ajouter dispatch comme dépendance
+ // Récupérer les valeurs stockées dans le localStorage au chargement de la page
+ useEffect(() => {
+  const rememberedEmail = localStorage.getItem("rememberedEmail");
+  const rememberedPassword = localStorage.getItem("rememberedPassword");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    dispatch(login(email, password));
+  if (rememberedEmail && rememberedPassword) {
+    setEmail(rememberedEmail);
+    setPassword(rememberedPassword);
+  }
+}, []);
+
+// Effect hook pour effectuer la redirection lorsque le token est mis à jour
+useEffect(() => {
+  const redirectIfLoggedIn = async () => {
+    if (token) {
+      // Appeler la fonction fetchUserProfile après une connexion réussie
+      await dispatch(fetchUserProfile());
+      window.location.href = "/user"; // Redirection vers la page de l'utilisateur
+    }
   };
+
+  redirectIfLoggedIn();
+}, [token, dispatch]); // Ajouter dispatch comme dépendance
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  // Si l'utilisateur est déjà connecté, redirigez-le vers la page de l'utilisateur
+  if (token) {
+    window.location.href = "/user";
+    return; // Arrêtez l'exécution de la fonction handleSubmit
+  }
+
+  // Stocker les valeurs saisies dans le localStorage si "Remember me" est coché
+  if (document.getElementById("remember-me").checked) {
+    localStorage.setItem("rememberedEmail", email);
+    localStorage.setItem("rememberedPassword", password);
+  } else {
+    // Effacer les valeurs stockées si "Remember me" n'est pas coché
+    localStorage.removeItem("rememberedEmail");
+    localStorage.removeItem("rememberedPassword");
+  }
+
+  dispatch(login(email, password));
+};
 
   return (
     <section className="sign-in-content">

@@ -268,6 +268,10 @@ body {
   flex: 1;
 }
 
+.account-div {
+  margin-bottom: -2rem;
+}
+
 .edit-button {
   border-color: #00bc77;
   background-color: #00bc77;
@@ -308,8 +312,31 @@ body {
 }
 
 
+/* error page */
 
-/* Modal.css */
+.error-page {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  margin-top: 5rem;
+  margin-bottom: 10rem;
+}
+
+.error-page h1 {
+  color: red;
+  font-size: 86px;
+  font-weight: 400;
+}
+
+.error-text {
+  font-size: 26px;
+  color: red;
+  margin: 0 2rem;
+}
+
+/***** modal edit name *****/
 
 .modal-overlay {
   position: fixed;
@@ -330,16 +357,44 @@ body {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.modal-content {
-  color: #00bc77;/* Ajoutez des styles supplémentaires selon vos besoins */
+.input-container {
+  margin-left: 15px;
+}
+
+.input-container > input{
+  width: 45%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px #bdbdbd solid;
+}
+.input-container > input:disabled{
+  color: #868585;
+  background-color:rgba(220, 220, 220, 0.562);
+}
+
+.btn-modal-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-modal {
+  color: #fff;
+  width: 50%;
+  padding: 10px 0px;
+  background-color: #00bc77;
+  border-color: #00bc77;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.text-label-modal {
+  margin-right: 0.5rem;
 }

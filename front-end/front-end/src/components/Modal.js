@@ -1,13 +1,10 @@
 import React from "react";
 
 
-function Modal({ children, onClose }) {
+function Modal({ children }) {
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <button className="modal-close" onClick={onClose}>
-          &times;
-        </button>
         <div className="modal-content">{children}</div>
       </div>
     </div>

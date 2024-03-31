@@ -48,7 +48,7 @@ function UserPage() {
           <button className="edit-button" onClick={handleEditNameClick}>Edit Name</button>
         </div>
         {token && (
-          <>
+          <div className="account-div">
             <Account
               title="Argent Bank Checking"
               number="x8349"
@@ -67,7 +67,7 @@ function UserPage() {
               amount="$184.30"
               description="Current Balance"
             />
-          </>
+          </div>
         )}
       </main>
       {showModal && ( // Afficher la modale si showModal est vrai
