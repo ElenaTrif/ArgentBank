@@ -101,6 +101,64 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /transactions:
+    get:
+      tags:
+        - Transaction Module
+      summary: Get All Transactions
+      description: Retrieve all transactions for the current month, grouped by account
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success. Returns a list of all transactions.
+        '404':
+          description: No transactions found for the current month.
+  /transactions/{id}:
+    get:
+      tags:
+        - Transaction Module
+      summary: Get Transaction Details
+      description: Retrieve details of a specific transaction by its ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the transaction to retrieve
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success. Returns details of the specified transaction.
+        '404':
+          description: The specified transaction ID was not found.
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Update Transaction Details
+      description: Update details of a specific transaction by its ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated transaction details
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success. Transaction details updated successfully.
+        '404':
+          description: The specified transaction ID was not found.
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -156,3 +214,12 @@ definitions:
     properties:
       userName:
         type: string
+  TransactionUpdate:
+    type: object
+    properties:
+      category:  
+        type: string
+        description: Pencil allows user to edit to a Select dropdown. Category of the transaction. Optional.
+      note:      
+        type: string
+        description: Pencil allows user to add note via text input. Note related to the transaction. Optional.

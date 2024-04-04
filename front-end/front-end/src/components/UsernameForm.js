@@ -16,7 +16,7 @@ function UsernameForm({ firstName, lastName, userName, onClose }) {
 
     try {
       await dispatch(updateUser(firstName, lastName, newUsername));
-      await dispatch(updateUsername(newUsername));
+      await dispatch(updateUsername(newUsername)); // Mettre à jour le nom d'utilisateur dans le state Redux
       setSuccessMessage("New username saved successfully!");
       onClose(); // Ferme la modal après avoir enregistré avec succès
     } catch (error) {

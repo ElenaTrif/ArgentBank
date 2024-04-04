@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function Header() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
-  const firstName = useSelector((state) => state.user.user?.firstName); // Utilisez le sélecteur pour extraire le nom d'utilisateur
+  const userName = useSelector((state) => state.user.user?.userName); // Utilisez le sélecteur pour extraire le nom d'utilisateur
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
@@ -41,7 +41,7 @@ function Header() {
         <div>
           <span className="main-nav-item" onClick={handleProfileClick}>
             <i className="fa fa-user-circle"></i>
-            {firstName}
+            {userName}
           </span>
           <Link className="main-nav-item" to="/" onClick={logout}>
             <i className="fa fa-sign-out"></i>

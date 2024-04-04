@@ -176,6 +176,7 @@ body {
   border-color: #00bc77;
   background-color: #00bc77;
   color: #fff;
+  text-decoration-line: underline;
 }
 
 .sign-in-content {
@@ -397,4 +398,8 @@ body {
 
 .text-label-modal {
   margin-right: 0.5rem;
+}
+
+button {
+  cursor: pointer;
 }
