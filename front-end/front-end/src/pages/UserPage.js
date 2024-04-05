@@ -5,12 +5,14 @@ import { fetchUserProfile } from "../actions/userActions";
 import Account from '../components/Account';
 import Modal from "../components/Modal"; // Importer le composant Modal
 import UsernameForm from "../components/UsernameForm"; // Importer le formulaire de modification du pseudo
+import { Navigate } from "react-router-dom"; // Importer le composant Navigate
 
 function UserPage() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
   const [showModal, setShowModal] = useState(false); // État pour afficher/masquer la modale
+  
 
   console.log("Token:", token);
 
@@ -34,6 +36,11 @@ function UserPage() {
   const handleCloseModal = () => {
     setShowModal(false); // Fermer la modale
   };
+
+   // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page d'accueil ou la page d'erreur
+   if (!token) {
+    return <Navigate to="*" />;
+  }
   
 
   return (
