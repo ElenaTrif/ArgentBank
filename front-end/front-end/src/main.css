@@ -83,7 +83,7 @@ body {
 }
 
 .hero {
-  background-image: url('/Users/alexandretrifonov/Desktop/FORMATION INTEGRATEUR WEB/ArgentBank/ArgentBank/front-end/front-end/src/images/bank-tree.webp');
+  background-image: url("/Users/alexandretrifonov/Desktop/FORMATION INTEGRATEUR WEB/ArgentBank/ArgentBank/front-end/front-end/src/images/bank-tree.webp");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -111,7 +111,6 @@ body {
   margin-bottom: 0;
   font-size: 0.9rem;
 }
-
 
 @media (min-width: 920px) {
   .hero {
@@ -312,7 +311,6 @@ body {
   }
 }
 
-
 /* error page */
 
 .error-page {
@@ -368,15 +366,15 @@ body {
   margin-left: 15px;
 }
 
-.input-container > input{
+.input-container > input {
   width: 45%;
   padding: 5px;
   border-radius: 5px;
   border: 1px #bdbdbd solid;
 }
-.input-container > input:disabled{
+.input-container > input:disabled {
   color: #868585;
-  background-color:rgba(220, 220, 220, 0.562);
+  background-color: rgba(220, 220, 220, 0.562);
 }
 
 .btn-modal-container {

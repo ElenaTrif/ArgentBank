@@ -1,25 +1,27 @@
 // userActions.js
-import { setToken, loginFailure, setUser } from '../slices/userSlice';
+import { setToken, loginFailure, setUser } from "../slices/userSlice";
 
 export const fetchUserProfile = () => {
   return async (dispatch, getState) => {
-    try { 
-        const { token } = getState().user;
+    try {
+      const { token } = getState().user;
 
-        // Mettre à jour le token dans le store Redux avant de faire la requête
-        dispatch(setToken(token));
+      // Mettre à jour le token dans le store Redux avant de faire la requête
+      dispatch(setToken(token));
 
-      const response = await fetch("http://localhost:3001/api/v1/user/profile", {
-        method: "POST", // Utilisez la méthode POST pour récupérer les données de profil
-        headers: {
-            Authorization: `Bearer ${token}`, 
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "POST", // Utilisez la méthode POST pour récupérer les données de profil
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
 
-      console.log('Data received from API:', data);
-
+      console.log("Data received from API:", data);
 
       if (response.ok) {
         dispatch(setUser(data.body)); // Mettre à jour le token dans le state Redux
@@ -42,17 +44,20 @@ export const updateUser = (firstName, lastName, newUsername) => {
       const userData = {
         firstName: firstName,
         lastName: lastName,
-        userName: newUsername
+        userName: newUsername,
       };
-      
-      const response = await fetch("http://localhost:3001/api/v1/user/profile", {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
       const data = await response.json();
 
       if (response.ok) {

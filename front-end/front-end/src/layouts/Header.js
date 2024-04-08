@@ -8,11 +8,11 @@ import { useNavigate } from "react-router-dom";
 function Header() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
-  const userName = useSelector((state) => state.user.user?.userName); // Utilisez le sélecteur pour extraire le nom d'utilisateur
+  const userName = useSelector((state) => state.user.user?.userName); 
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate("/user"); // Redirection vers la page de profil
+    navigate("/user"); 
   };
 
   const logout = () => {

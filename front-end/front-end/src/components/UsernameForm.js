@@ -28,7 +28,9 @@ function UsernameForm({ firstName, lastName, userName, onClose }) {
     <form className="modal-container" onSubmit={handleSubmit}>
       {successMessage && <p>{successMessage}</p>}
       <div className="input-container">
-        <label className="text-label-modal" htmlFor="newUsername">User name:</label>
+        <label className="text-label-modal" htmlFor="newUsername">
+          User name:
+        </label>
         <input
           type="text"
           id="newUsername"
@@ -37,11 +39,15 @@ function UsernameForm({ firstName, lastName, userName, onClose }) {
         />
       </div>
       <div className="input-container">
-        <label className="text-label-modal" htmlFor="newUsername">First Name:</label>
+        <label className="text-label-modal" htmlFor="newUsername">
+          First Name:
+        </label>
         <input type="text" id="newFirstName" value={firstName || ""} disabled />
       </div>
       <div className="input-container">
-        <label className="text-label-modal" htmlFor="newUsername">Last Name:</label>
+        <label className="text-label-modal" htmlFor="newUsername">
+          Last Name:
+        </label>
         <input type="text" id="newLastName" value={lastName || ""} disabled />
       </div>
       <div className="btn-modal-container">

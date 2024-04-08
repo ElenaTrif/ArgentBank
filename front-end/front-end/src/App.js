@@ -9,7 +9,6 @@ import Footer from "./layouts/Footer";
 import { Provider } from "react-redux";
 import store from "./Store/store";
 
-
 function App() {
   return (
     <Provider store={store}>
@@ -19,7 +18,7 @@ function App() {
           <Route path="/" exact element={<HomePage />} />
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/user" element={<UserPage />} />
-          <Route path='*' element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
       </Router>

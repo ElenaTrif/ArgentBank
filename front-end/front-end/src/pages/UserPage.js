@@ -2,17 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile } from "../actions/userActions";
-import Account from '../components/Account';
-import Modal from "../components/Modal"; // Importer le composant Modal
-import UsernameForm from "../components/UsernameForm"; // Importer le formulaire de modification du pseudo
-import { Navigate } from "react-router-dom"; // Importer le composant Navigate
+import Account from "../components/Account";
+import Modal from "../components/Modal"; 
+import UsernameForm from "../components/UsernameForm"; 
+import { Navigate } from "react-router-dom"; 
 
 function UserPage() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
   const [showModal, setShowModal] = useState(false); // État pour afficher/masquer la modale
-  
 
   console.log("Token:", token);
 
@@ -21,15 +20,14 @@ function UserPage() {
       dispatch(fetchUserProfile());
     }
   }, [token, dispatch]);
-  
+
   const fullName = user ? `${user.firstName} ${user.lastName}` : null;
 
   console.log("FullName:", fullName);
 
   const handleEditNameClick = () => {
-
     console.log("Edit Name button clicked");
-    
+
     setShowModal(true); // Afficher la modale lorsque le bouton "Edit Name" est cliqué
   };
 
@@ -37,11 +35,10 @@ function UserPage() {
     setShowModal(false); // Fermer la modale
   };
 
-   // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page d'accueil ou la page d'erreur
-   if (!token) {
+  // Vérifier si l'utilisateur est connecté, sinon rediriger vers la page d'accueil ou la page d'erreur
+  if (!token) {
     return <Navigate to="*" />;
   }
-  
 
   return (
     <div>
@@ -52,7 +49,9 @@ function UserPage() {
             <br />
             {fullName}!
           </h1>
-          <button className="edit-button" onClick={handleEditNameClick}>Edit Name</button>
+          <button className="edit-button" onClick={handleEditNameClick}>
+            Edit Name
+          </button>
         </div>
         {token && (
           <div className="account-div">
@@ -80,11 +79,16 @@ function UserPage() {
       {showModal && ( // Afficher la modale si showModal est vrai
         <Modal onClose={handleCloseModal}>
           <h2>Edit user info</h2>
-          <UsernameForm firstName={user.firstName} lastName={user.lastName} userName={user.userName} onClose={handleCloseModal}/>
+          <UsernameForm
+            firstName={user.firstName}
+            lastName={user.lastName}
+            userName={user.userName}
+            onClose={handleCloseModal}
+          />
         </Modal>
       )}
     </div>
-  ); 
+  );
 }
 
 export default UserPage;

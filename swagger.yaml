@@ -101,64 +101,82 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  # TRANSACTIONS
   /transactions:
     get:
-      tags:
-        - Transaction Module
-      summary: Get All Transactions
-      description: Retrieve all transactions for the current month, grouped by account
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Success. Returns a list of all transactions.
-        '404':
-          description: No transactions found for the current month.
-  /transactions/{id}:
-    get:
-      tags:
-        - Transaction Module
-      summary: Get Transaction Details
-      description: Retrieve details of a specific transaction by its ID
-      parameters:
-        - in: path
-          name: id
-          description: ID of the transaction to retrieve
-          required: true
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Success. Returns details of the specified transaction.
-        '404':
-          description: The specified transaction ID was not found.
-    put:
       security:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: Update Transaction Details
-      description: Update details of a specific transaction by its ID
-      parameters:
-        - in: path
-          name: id
-          description: ID of the transaction to update
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: Updated transaction details
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionUpdate'
+      summary: Get All Transactions
+      description: API for getting all transactions for the current month, grouped by account
       produces:
         - application/json
       responses:
         '200':
-          description: Success. Transaction details updated successfully.
+          description: Transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionsList'
+        '400':
+          description: Invalid Fields
         '404':
-          description: The specified transaction ID was not found.
+          description: No transactions found for the current month
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}:
+    parameters:
+      - in: path
+        name: transactionId
+        description: The unique identifier of the transaction
+        required: true
+        type: string
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get Transaction Details
+      description: API for getting details of a specific transaction
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction details retrieved successfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Update Transaction 
+      description: API for updating information of a specific transaction
+      parameters:
+        - in: body
+          name: body
+          description: Transaction payload
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successfully
+          schema: 
+            $ref: '#/definitions/TransactionResponse'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -214,12 +232,47 @@ definitions:
     properties:
       userName:
         type: string
-  TransactionUpdate:
+  # TRANSACTIONS
+  Transaction:
     type: object
     properties:
-      category:  
+      transactionId:
+        type: integer
+        description: The unique identifier of the transaction
+      transactionDate: 
         type: string
-        description: Pencil allows user to edit to a Select dropdown. Category of the transaction. Optional.
-      note:      
+        description: date of the transaction
+      transactionDescription: 
         type: string
-        description: Pencil allows user to add note via text input. Note related to the transaction. Optional.
+        description: the name of the transaction
+      transactionType: 
+        type: string
+        description: the type of the transaction (electronic, card, ... )
+      transactionCategory:
+        type: string
+        description: the category of the transaction (Food, Shopping, ...)
+      transactionNote:
+        type: string
+        description: note for the transaction
+      transactionAmount:
+        type: number
+        description: the amount of the transaction
+      transactionBalance:
+        type: number
+        description: account balance after transaction
+  TransactionsList:
+    type: array
+    items:
+      $ref: '#/definitions/Transaction'
+  TransactionResponse:
+    type: object
+    properties:
+      transactionId:
+        type: integer
+        description: The unique identifier of the transaction
+      transactionCategory:
+        type: string
+        description: the category of the transaction (Food, Shopping, ...)
+      transactionNote:
+        type: string
+        description: note for the transaction
