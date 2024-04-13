@@ -69,7 +69,7 @@ paths:
        # - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -94,9 +94,35 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Get User Accounts
+      description: API for getting all user accounts
+      parameters:
+        - name: body
+          in: body
+          description: User ID payload
+          required: true
+          schema:
+            $ref: '#/definitions/UserIdPayload'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User accounts retrieved successfully
+          schema:
+            $ref: '#/definitions/UserAccounts'
         '400':
           description: Invalid Fields
         '500':
@@ -110,6 +136,17 @@ paths:
         - Transaction Module
       summary: Get All Transactions
       description: API for getting all transactions for the current month, grouped by account
+      parameters:
+        - name: month
+          in: query
+          description: Current month
+          required: false
+          type: string
+        - name: accountId
+          in: query
+          description: ID of the account for filtering transactions
+          required: false
+          type: string
       produces:
         - application/json
       responses:
@@ -253,13 +290,6 @@ definitions:
         description: the category of the transaction (Food, Shopping, ...)
       transactionNote:
         type: string
-        description: note for the transaction
-      transactionAmount:
-        type: number
-        description: the amount of the transaction
-      transactionBalance:
-        type: number
-        description: account balance after transaction
   TransactionsList:
     type: array
     items:
@@ -276,3 +306,27 @@ definitions:
       transactionNote:
         type: string
         description: note for the transaction
+  UserIdPayload:
+    type: object
+    properties:
+      userId:
+        type: string
+        description: ID of the user
+    required:
+      - userId
+  UserAccounts:
+    type: array
+    items:
+      $ref: '#/definitions/UserAccount'
+  UserAccount:
+    type: object
+    properties:
+      accountId:
+        type: integer
+        description: The unique identifier of the account
+      accountType:
+        type: string
+        description: Type of the account (e.g., savings, checking)
+      accountBalance:
+        type: number
+        description: Current balance of the account
